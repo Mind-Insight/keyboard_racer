@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # my apps
     "api.apps.ApiConfig",
+    "users.apps.UsersConfig",
     # other apps
     "rest_framework",
 ]
@@ -29,7 +30,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # my middlewares
+    "api.middleware.CustomSessionMiddleware",
 ]
+
+#! указывает на использование базы данных в качестве хранилища сессий
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
 
 ROOT_URLCONF = "keyboard_racer.urls"
 
