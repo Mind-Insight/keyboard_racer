@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     # other apps
     "rest_framework",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -30,12 +31,16 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # my middlewares
-    "api.middleware.CustomSessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
-#! указывает на использование базы данных в качестве хранилища сессий
-SESSION_ENGINE = "django.contrib.sessions.backends.db"
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ]
+}
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = "keyboard_racer.urls"
 
@@ -78,6 +83,8 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+AUTH_USER_MODEL = "users.User"
 
 LANGUAGE_CODE = "en-us"
 
