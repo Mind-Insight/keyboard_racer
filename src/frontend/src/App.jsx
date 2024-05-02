@@ -12,8 +12,8 @@ function App() {
       sendUserData(newUser);
     } else {
       sendUserData(userData);
-
     }
+    fetchProfileData(userData.identifier);
   }, []);
 
   const sendUserData = async (data) => {
@@ -27,6 +27,14 @@ function App() {
 
     const responseData = await response.json();
     console.log(responseData);
+  };
+  const fetchProfileData = async (identifier) => {
+    const response = await fetch(`http://127.0.0.1:8000/api/profile/${identifier}/`, {
+      method: "GET"
+    });
+
+    const profileData = await response.json();
+    console.log(profileData);
   };
 
   function uuidv4() {
