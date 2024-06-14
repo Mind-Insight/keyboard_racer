@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.enter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.main-link {
+    font-size: 30px;
+    border: 3px solid black;
+    padding: 10px;
+    margin-bottom: 40px;
+    border-radius: 20%;
+    transition: ease-in-out 0.5s;
+    cursor: pointer;
+}
+
+.main-link:hover {
+    transform: scale(1.1);
+}
+
+.profile-link {
+    font-size: 25px;
+    border: 2px solid black;
+    padding: 5px;
+    border-radius: 20%;
+    cursor: pointer;
+    transition: ease-in-out 0.5s;
+}
+
+.profile-link:hover {
+    transform: scale(1.1);
+}
+
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.typing-text {
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+#typing {
+    font-size: 40px;
+    width: 700px;
+    height: 70px;
+}
+
+
+body {
+    background-color: bisque;
+}
+
+.main {
+    border: 1px solid black;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.back {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    font-size: 20px;
+    border: 3px solid black;
+    padding: 1%;
+    cursor: pointer;
+}
