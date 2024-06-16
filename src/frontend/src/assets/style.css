@@ -15,7 +15,7 @@ a {
     text-decoration: none;
     font-weight: normal;
     border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s, transform 0.3s;
     cursor: pointer;
 }
@@ -103,4 +103,45 @@ body {
 
 .highlight {
     border-bottom: 3px solid black;
+}
+
+.correct {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+
+
+
+.profile-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    background-color: #ffc79d;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    transition: ease-in-out 1s;
+}
+.profile-title:hover {
+    color: #f8f9fa;
+    background-color: #f6834f;
+    cursor: default;
+}
+
+.user-info-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-info-container h1 {
+    font-size: 40px;
+    margin-top: 40px;
 }

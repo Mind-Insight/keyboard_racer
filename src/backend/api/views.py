@@ -12,13 +12,21 @@ User = get_user_model()
 class UserDataView(APIView):
     def post(self, request):
         user_data = request.data
-        identifier = user_data["identifier"]
-        if not User.objects.filter(identifier=identifier).exists():
-            User.objects.create(identifier=identifier)
-        user = User.objects.get(identifier=identifier)
-        return Response(
-            {"user": f"id: {identifier}; races: {user.races}; speed: {user.avg_speed}"}
-        )
+        if not user_data["textDone"]:
+            identifier = user_data["identifier"]
+            if not User.objects.filter(identifier=identifier).exists():
+                User.objects.create(identifier=identifier)
+            user = User.objects.get(identifier=identifier)
+            return Response(
+                {"user": f"id: {identifier}; races: {user.races}; speed: {user.avg_speed}"}
+            )
+        else:
+            user = User.objects.get(identifier=user_data["identifier"])
+            user.races += 1
+            user.save()
+            return Response(
+                {"user": f"races: {user.races}; speed: {user.avg_speed}"}
+            )
 
 
 class RetrieveUserProfileView(RetrieveAPIView):
@@ -33,5 +41,5 @@ class RetrieveUserProfileView(RetrieveAPIView):
 
 class TextView(APIView):
     def get(self, request, *args, **kwargs):
-        words = ["test", "type"]
+        words = ["apple", "banana", "cat", "dog", "elephant"]
         return Response(words)

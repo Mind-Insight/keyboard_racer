@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import axios from "axios";
 
 export default function sendInfo() {
     useEffect(() => {
@@ -10,6 +11,7 @@ export default function sendInfo() {
             if (!userData) {
                 const newUser = { identifier: uuidv4() };
                 localStorage.setItem("user_data", JSON.stringify(newUser));
+                console.log("hello");
 
                 sendUserData(newUser);
             } else {
@@ -20,16 +22,14 @@ export default function sendInfo() {
     }, []);
 
     const sendUserData = async (data) => {
-        const response = await fetch("http://127.0.0.1:8000/api/info/", {
+        axios({
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
-        });
-
-        const responseData = await response.json();
-        console.log(responseData);
+            url: "http://127.0.0.1:8000/api/info/",
+            data: {
+                identifier: data["identifier"],
+                textDone: false,
+            }
+        })
     };
 
     function uuidv4() {

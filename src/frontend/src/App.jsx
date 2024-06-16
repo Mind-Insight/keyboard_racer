@@ -12,7 +12,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="profile" element={<ProfilePage></ProfilePage>}></Route>
-        <Route path="enter" element={<EnterPage></EnterPage>}></Route>
+        <Route path="" element={<EnterPage></EnterPage>}></Route>
         <Route path="main" element={<MainPage></MainPage>}></Route>
       </Routes>
     </BrowserRouter>
