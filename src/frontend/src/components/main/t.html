@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Интерактивный Заголовок</title>
+<style>
+
+.highlight {
+    border-bottom: 2px solid black;
+
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var inputField = document.getElementById('inputField');
+  var title = document.getElementById('dynamicTitle');
+  var originalText = title.textContent;
+
+  inputField.addEventListener('input', function(e) {
+    var cursorPosition = inputField.selectionStart;
+    var userInput = inputField.value;
+    var highlightIndex = userInput.length ? cursorPosition : 0;
+
+    title.innerHTML = originalText.split('').map(function(char, index) {
+      if (index === highlightIndex) {
+        return '<span class="highlight">' + char + '</span>';
+      } else {
+        return char;
+      }
+    }).join('');
+  });
+
+  title.innerHTML = '<span class="highlight">' + originalText.charAt(0) + '</span>' + originalText.slice(1);
+});
+</script>
+</head>
+<body>
+
+<h1 id="dynamicTitle">Мой заголовок</h1>
+<input type="text" id="inputField" placeholder="Введите символ">
+
+</body>
+</html>

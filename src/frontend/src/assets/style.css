@@ -51,15 +51,23 @@
 }
 
 .typing-text {
+    flex-grow: 0;
     margin-bottom: 20px;
+    border: 2px solid black;
+    border-radius: 5%;
+    padding: 10px;
     font-size: 30px;
+    max-width: 700px;
+    background-color: white;
 }
 
-#typing {
+
+.Value {
     font-size: 40px;
     width: 700px;
     height: 70px;
 }
+
 
 
 body {
@@ -80,4 +88,8 @@ body {
     border: 3px solid black;
     padding: 1%;
     cursor: pointer;
+}
+
+.highlight {
+    border-bottom: 2px solid black;
 }

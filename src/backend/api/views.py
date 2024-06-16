@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth import get_user_model
 
 from rest_framework.views import APIView
@@ -29,3 +31,9 @@ class RetrieveUserProfileView(RetrieveAPIView):
     def get_object(self):
         identifier = self.kwargs["identifier"]
         return User.objects.get(identifier=identifier)
+
+
+class TextView(APIView):
+    def get(self, request, *args, **kwargs):
+        words = ["test", "type"]
+        return Response(words)
