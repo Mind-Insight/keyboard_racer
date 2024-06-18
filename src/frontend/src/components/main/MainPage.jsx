@@ -7,6 +7,7 @@ export default function MainPage() {
     const [userInput, setUserInput] = useState('');
     const [cursorPosition, setCursorPosition] = useState(0);
     const [isError, setIsError] = useState(false);
+    const [typingSpeeds, setTypingSpeeds] = useState([]);
 
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/api/texts/')
@@ -21,28 +22,52 @@ export default function MainPage() {
                 console.error("Fetch error:", error);
             });
     }, []);
+
+    useEffect(() => {
+        const savedTypingSpeeds = JSON.parse(localStorage.getItem("typingSpeeds"));
+        if (savedTypingSpeeds) {
+            setTypingSpeeds(savedTypingSpeeds);
+        }
+    }, []);
+
     const handleInputChange = (event) => {
-        const {value} = event.target;
+        const value = event.target.value;
         const cursorPos = event.target.selectionStart;
         setUserInput(value);
         setCursorPosition(cursorPos);
+
+        // текст полностью набран
         if (cursorPos === originalText.length) {
             let localObj = JSON.parse(localStorage.getItem("user_data"));
+
+            // вычисление средней скорости набора одного текста
+            const averageSpeed = Math.floor(Math.random() * 100) + 1;
+            const newTypingSpeeds = [...typingSpeeds, averageSpeed];
+            localStorage.setItem("typingSpeeds", JSON.stringify(newTypingSpeeds));
+
+            // вычисление среднего значения всех скоростей
+            let totalAverageSpeed = 0;
+            for (let i = 0; i < newTypingSpeeds.length; i++) {
+                totalAverageSpeed += newTypingSpeeds[i];
+            }
+            totalAverageSpeed /= newTypingSpeeds.length;
+
+            // отпралвяем на бэкенд среднюю скорость набора
             axios({
                 method: "POST",
                 url: "http://127.0.0.1:8000/api/info/",
                 data: {
                     identifier: localObj["identifier"],
                     textDone: true,
-                    textSpeed: 100,
+                    textSpeed: totalAverageSpeed,
                 },
             })
-            .then((response) => {
-                console.log(response.data);
-            })
-            .catch((error) => {
-                console.log("Error while sending info", error);
-            })
+                .then((response) => {
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    console.log("Error while sending info", error);
+                })
         }
 
         const isCharCorrect = value[cursorPos - 1] === originalText[cursorPos - 1];
@@ -62,11 +87,22 @@ export default function MainPage() {
         });
     };
 
+    const handlePaste = (event) => {
+        event.preventDefault();
+    }
+
     return (
         <>
             <div className="main-container">
                 <h1 className="typing-text">{highlightText()}</h1>
-                <input type="text" className="Value" placeholder="Введите текст..." onChange={handleInputChange} autoFocus />
+                <input
+                    type="text"
+                    className="Value"
+                    placeholder="Введите текст..."
+                    onChange={handleInputChange}
+                    onPaste={handlePaste}
+                    autoFocus
+                />
                 <a href="http://localhost:5173/" className="back">Back</a>
             </div>
         </>

@@ -12,8 +12,8 @@ User = get_user_model()
 class UserDataView(APIView):
     def post(self, request):
         user_data = request.data
+        identifier = user_data["identifier"]
         if not user_data["textDone"]:
-            identifier = user_data["identifier"]
             if not User.objects.filter(identifier=identifier).exists():
                 User.objects.create(identifier=identifier)
             user = User.objects.get(identifier=identifier)
@@ -21,8 +21,10 @@ class UserDataView(APIView):
                 {"user": f"id: {identifier}; races: {user.races}; speed: {user.avg_speed}"}
             )
         else:
-            user = User.objects.get(identifier=user_data["identifier"])
+            speed = user_data["textSpeed"]
+            user = User.objects.get(identifier=identifier)
             user.races += 1
+            user.avg_speed = speed
             user.save()
             return Response(
                 {"user": f"races: {user.races}; speed: {user.avg_speed}"}

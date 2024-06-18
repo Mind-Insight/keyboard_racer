@@ -1,21 +1,26 @@
-import { useState } from "react"
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-import getInfo from "../info/GetUserInfo"
 import "../../assets/style.css"
 
 
 export default function ProfilePage() {
     const [profileData, setProfileData] = useState("");
 
-    const fetchProfileData = async (identifier) => {
-        const response = await fetch(`http://127.0.0.1:8000/api/profile/${identifier}/`, {
-            method: "GET"
-        });
-        const profileData = await response.json();
-        setProfileData(profileData);
-    };
     const userData = JSON.parse(localStorage.getItem("user_data"));
-    fetchProfileData(userData.identifier);
+    useEffect(() => {
+        axios({
+            method: "GET",
+            url: `http://127.0.0.1:8000/api/profile/${userData["identifier"]}/`,
+        })
+        .then((response) => {
+            setProfileData(response.data);
+        })
+        .catch((error) => {
+            console.log("Error while getting user data:", error);
+        })
+    }, []);
+
     return (
         <>
             <h1 className="profile-title">PROFILE</h1>
